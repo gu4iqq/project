@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Учет пропущенных занятий</title>
+    <link type="image/png" sizes="320x320" rel="icon" href="./images/icon.png" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  </head>
+  <body id="body">
+    <div class="container">
+      <%- include('layouts/header') -%>
+
+      <div class="content">
+        <form class="form_center" action="/createDiscipline" method="post">
+          <label for="disciplineName">Название дисциплины:</label>
+          <input type="text" name="disciplineName" id="disciplineName" />
+          <button class="button">Создать</button>
+        </form>
+        <p>Список учебных дисциплин:</p>
+        <% for(let i = 0; i < disciplines.length; i++) { %>
+        <p class="omission" style="padding: 14px;">
+            ID:<%= disciplines[i].id %>
+            Название учебной дисциплины: <%= disciplines[i].disciplinename%>
+          <form class="form_center" action="/deleteDiscipline" method="post">
+            <input type="text" name="disciplineId" id="disciplineId" value="<%= disciplines[i].id %>" style="display: none" />
+            <button class="button">Удалить</button>
+          </form>
+        </p>
+        <% } %>
+      </div>
+      <%- include('layouts/footer') -%>
+    </div>
+  </body>
+</html>

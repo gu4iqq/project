@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Учет пропущенных занятий</title>
+    <link type="image/png" sizes="320x320" rel="icon" href="./images/icon.png" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  </head>
+  <body id="body">
+    <div class="container">
+      <%- include('layouts/header') -%>
+
+      <div class="content">
+        <h1>Группа: <%= group.group_number%></h1>
+        <h1>Учебная дисциплина: <%= discipline.disciplinename%></h1>
+
+        <form class="form_center" action="/omissionsList" method="post">
+          <input type="text" name="groupId" id="groupId" value="<%= group.id%>" style="display: none" />
+          <input type="text" name="disciplineId" id="disciplineId" value="<%= discipline.id%>" style="display: none" />
+          <label for="date">Дата:</label>
+          <input type="date" name="date" id="date" />
+          <button class="button">Посмотреть</button>
+        </form>
+
+        <!-- <p>Пропуски:</p> -->
+        <% for (let i = 0; i < omissions.length; i++) { %>
+        <div class="omission">
+            <p><%= i+1 %>) <%= omissions[i].studentname %></p>
+            <% if (omissions[i].ispresent == true) {%> 
+                <%- "<p style=\"color: green;\">Был</p>" %> 
+                <% } else { %> 
+                    <%- "<p style=\"color: red;\">Не был</p>" %> 
+                    <% } %>
+        </div>
+        <% }%>
+        <p style="color: red"><%= errMsg %></p>
+
+        <script>
+          var date = new Date();
+          var day = date.getDate(),
+            month = date.getMonth() + 1,
+            year = date.getFullYear();
+          month = (month < 10 ? "0" : "") + month;
+          day = (day < 10 ? "0" : "") + day;
+          var today = year + "-" + month + "-" + day;
+          document.getElementById("date").value = today;
+        </script>
+      </div>
+
+      <%- include('layouts/footer') -%>
+    </div>
+  </body>
+</html>

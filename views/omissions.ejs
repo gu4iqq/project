@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Учет пропущенных занятий</title>
+    <link type="image/png" sizes="320x320" rel="icon" href="./images/icon.png" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  </head>
+  <body id="body">
+    <div class="container">
+      <%- include('layouts/header') -%>
+      <div class="content">
+        <h1>Группа: <%= group.group_number%></h1>
+        <h1>Учебная дисциплина: <%= discipline.disciplinename%></h1>
+
+        <form class="form_center" action="/omissionTable" method="post">
+          <input type="text" name="groupId" id="groupId" value="<%= group.id%>" style="display: none" />
+          <input type="text" name="disciplineId" id="disciplineId" value="<%= discipline.id%>" style="display: none" />
+
+          <label for="date">Дата:</label>
+          <input type="date" name="date" id="date" />
+          <h1>Список</h1>
+          <% for (let i = 0; i < students.length; i++) { %>
+
+          <div class="omission">
+            <label for="exist"><%= i+1 %>) <%= students[i].studentname %></label>
+            <input type="checkbox" id="exist" name="exist" checked="true" onclick="update()" />
+          </div>
+
+          <% } %>
+
+          <button class="button" onclick="save()">Бяк бяк</button>
+        </form>
+        <script>
+          var elements = document.querySelectorAll('input[type="checkbox"]');
+
+          var date = new Date();
+          var day = date.getDate(),
+            month = date.getMonth() + 1,
+            year = date.getFullYear();
+          month = (month < 10 ? "0" : "") + month;
+          day = (day < 10 ? "0" : "") + day;
+          var today = year + "-" + month + "-" + day;
+          document.getElementById("date").value = today;
+
+          update();
+          function update() {
+            elements = document.querySelectorAll('input[type="checkbox"]');
+            for (let i = 0; i < elements.length; i++) {
+              if (elements[i].checked) {
+                elements[i].value = "true";
+              } else {
+                elements[i].value = "false";
+              }
+            }
+          }
+
+          function save() {
+            let elements = document.querySelectorAll('input[type="checkbox"]');
+            for (let i = 0; i < elements.length; i++) {
+              elements[i].checked = "true";
+            }
+          }
+        </script>
+      </div>
+
+      <%- include('layouts/footer') -%>
+    </div>
+  </body>
+</html>
