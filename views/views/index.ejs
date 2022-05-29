@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Учет пропущенных занятий</title>
+    <link type="image/png" sizes="320x320" rel="icon" href="./images/icon.png" />
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+  </head>
+  <body id="body">
+    <div class="container">
+      <%- include('layouts/header') -%>
+
+      <div class="content">
+        <div class="authbar">
+          <% if (user) { %>
+          <span>Здравствуйте, <%= user.username %></span>
+          <a style="margin-left: auto" href="/logout">Выход</a>
+          <% } else {%>
+          <a href="./login.html">Логин</a>
+          <a href="./registration.html">Регистрация</a>
+          <% } %>
+        </div>
+        <% if (user && (user.role) == 'ADMIN') { %>
+        <button class="button" onclick="window.location.href = './users.html'">Пользователи</button>
+        <button class="button" onclick="window.location.href = './disciplineEdit'">Дисциплины</button>
+
+        <% } %>
+        <button class="button" onclick="window.location.href = './groups.html'">Пропуски</button>
+      </div>
+
+      <%- include('layouts/footer') -%>
+    </div>
+  </body>
+</html>
