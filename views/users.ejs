@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Учет пропущенных занятий</title>
+    <link type="image/png" sizes="320x320" rel="icon" href="./images/icon.png" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  </head>
+  <body id="body">
+    <div class="container">
+      <%- include('layouts/header') -%>
+
+      <div class="content">
+        <form class="form_center" action="/deleteUser" method="post">
+          <label for="id">ID Пользователя:</label>
+          <input type="text" name="id" id="id" />
+          <button class="button">Удалить</button>
+        </form>
+        <p>Список юзеров:</p>
+        <% for(let i = 0; i < users.length; i++) { %>
+        <p>
+          ID: <a href="/changeUserRole?userId=<%= users[i].id%>"><%= users[i].id%></a><br />
+          Никнейм: <%= users[i].username%> Роль: <%= users[i].role%>
+        </p>
+        <% } %>
+      </div>
+      <%- include('layouts/footer') -%>
+    </div>
+  </body>
+</html>
