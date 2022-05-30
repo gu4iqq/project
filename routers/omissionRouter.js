@@ -42,7 +42,7 @@ router.get("/omissionsList", async (req, res) => {
 router.post("/omissionsList", prepodMiddleware, async (req, res) => {
   const group = await groupRepo.getGroup(req.body.groupId);
   const discipline = await disciplineRepo.getDiscipline(req.body.disciplineId);
-  const omissions = await omissionRepo.getOmissionsByDateDiscGroup(req.body.date, req.body.disciplineId, req.body.groupId);
+  const omissions = await omissionRepo.getOmissionsByDIAPAZONDateDiscGroup(req.body.date1, req.body.date2, req.body.disciplineId, req.body.groupId);
   let err = null;
   if (omissions[0] == null) {
     err = "Записей не найдено.";

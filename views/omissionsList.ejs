@@ -19,33 +19,61 @@
         <form class="form_center" action="/omissionsList" method="post">
           <input type="text" name="groupId" id="groupId" value="<%= group.id%>" style="display: none" />
           <input type="text" name="disciplineId" id="disciplineId" value="<%= discipline.id%>" style="display: none" />
-          <label for="date">Дата:</label>
-          <input type="date" name="date" id="date" />
+          <label for="date1">Дата с:</label>
+          <input type="date" name="date1" id="date1" />
+          <label for="date2">по</label>
+          <input type="date" name="date2" id="date2" />
           <button class="button">Посмотреть</button>
         </form>
-
+        
         <!-- <p>Пропуски:</p> -->
+
+        <% if(omissions!="") { %> 
+        <%- "<h1>Пропуски на дату " + omissions[0].data.getDate()+ "." + (omissions[0].data.getMonth()+1) + "." + omissions[0].data.getFullYear() +"</h1>"%> 
+        <% var currDate = omissions[0].data.getDate()+ "." + (omissions[0].data.getMonth()+1) + "." + omissions[0].data.getFullYear(); 
+          var iter = 1;
+        %> 
+          <% } %> 
+
+
         <% for (let i = 0; i < omissions.length; i++) { %>
-        <div class="omission">
-            <p><%= i+1 %>) <%= omissions[i].studentname %></p>
-            <% if (omissions[i].ispresent == true) {%> 
-                <%- "<p style=\"color: green;\">Был</p>" %> 
+          <% if(currDate == omissions[i].data.getDate()+ "." + (omissions[i].data.getMonth()+1) + "." + omissions[i].data.getFullYear()) {%> 
+            <div class="omission">
+                <p><%= iter++ %>) <%= omissions[i].studentname %></p>
+                <% if (omissions[i].ispresent == true) {%> 
+                    <%- "<p style=\"color: green;\">Был</p>" %> 
                 <% } else { %> 
                     <%- "<p style=\"color: red;\">Не был</p>" %> 
-                    <% } %>
-        </div>
+                <% } %>
+            </div>
+          <% } else { iter = 1; %> 
+            <%- "<h1>Пропуски на дату " + omissions[i].data.getDate()+ "." + (omissions[i].data.getMonth()+1) + "." + omissions[i].data.getFullYear() +"</h1>"%> 
+            <div class="omission">
+                <p><%= iter++ %>) <%= omissions[i].studentname %></p>
+                <% if (omissions[i].ispresent == true) {%> 
+                    <%- "<p style=\"color: green;\">Был</p>" %> 
+                <% } else { %> 
+                    <%- "<p style=\"color: red;\">Не был</p>" %> 
+                <% } %>
+            </div>
+            
+          <% currDate = omissions[i].data.getDate()+ "." + (omissions[i].data.getMonth()+1) + "." + omissions[i].data.getFullYear(); }%>
         <% }%>
         <p style="color: red"><%= errMsg %></p>
 
         <script>
           var date = new Date();
           var day = date.getDate(),
+          day7 = date.getDate()-7,
             month = date.getMonth() + 1,
             year = date.getFullYear();
           month = (month < 10 ? "0" : "") + month;
           day = (day < 10 ? "0" : "") + day;
+          day7 = (day7< 10 ? "0" : "") + day7;
           var today = year + "-" + month + "-" + day;
-          document.getElementById("date").value = today;
+          var today7 = year + "-" + month + "-" + day7;
+          document.getElementById("date1").value = today7;
+          document.getElementById("date2").value = today;
         </script>
       </div>
 

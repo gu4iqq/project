@@ -24,6 +24,15 @@ async function getOmissionsByDateDiscGroup(data, disciplineId, groupId) {
   ).rows;
 }
 
+async function getOmissionsByDIAPAZONDateDiscGroup(data1, data2, disciplineId, groupId) {
+  return (
+    await db.query(
+      "select studentName, isPresent, data from omissions,groups,students where omissions.data >= $1 and omissions.data <= $2 and omissions.disciplineId =$3 and omissions.studentId = students.id and students.groupId = $4",
+      [data1, data2, disciplineId, groupId]
+    )
+  ).rows;
+}
+
 async function getOmission(id) {
   return (await db.query("select * from omissions where id = $1", [id])).rows[0];
 }
@@ -41,6 +50,7 @@ module.exports = {
   createOmission,
   getOmissions,
   getOmissionsByDateDiscGroup,
+  getOmissionsByDIAPAZONDateDiscGroup,
   getOmission,
   updateOmission,
   deleteOmission,
